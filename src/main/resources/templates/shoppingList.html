@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Shopping list</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+<div class ="container">
+	<div class="p-4 my-3 bg-dark text-white ">
+			<h3>Shopping List for [[${#httpServletRequest.remoteUser}]]</h3>
+	</div>
+	
+	<div>
+		<a class="btn btn-success" href="/add">Add Item</a>
+	</div>
+	<br>
+	
+	<table class="table table-striped" >
+		<tr>
+			<th>Name</th>
+			<th>Amount</th>
+			<th></th>
+			<th></th>
+
+		</tr>
+		<tr th:each="item : ${items}">
+			<td th:text="${item.name}"></td>
+			<td th:text="${item.amount}"></td>
+
+
+			<td><a class="btn btn-danger" th:href="@{/delete/{id}(id=${item.id})}">Delete</a></td>
+			<td><a class="btn btn-info" th:href="@{/edit/{id}(id=${item.id})}">Edit</a></td>
+		</tr>
+	</table>
+	<form th:action="@{/logout}" method="post">
+            <input class="btn btn-danger" type="submit" value="Sign Out"/>
+        </form>
+</div>
+</body>
+</html>
